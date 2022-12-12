@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Blood Bank MKA Bangladesh</title>
+		<style>
+		label{display: inline-block; width:80px}
+		input, select{width: 120px;}</style>
+		<!-- <link rel="stylesheet" href="style.css"> -->
+	</head>
+	<body>
+
+		<h1><caption>Blood Donor Record</caption></h1>
+
+
+		<label>Name</label> <input id="nameBox" type="text"> <br> <br>
+		<label>Roll No</label> <input id="rollBox" type="text"><br> <br>
+		<label>Section</label> <input id="secBox" type="text"><br> <br>
+		<label>Gender</label>
+		<select id="genBox">
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+		</select>
+		<br> <br>
+		<hr>
+		<br>
+		<button id="insBtn">INSERT</button>
+		<button id="selBtn">SELECT</button>
+		<button id="updBtn">UPDATE</button>
+		<button id="delBtn">DELETE</button>
+
+		<!-- <div class="wrapper">
+			<table id="crud">
+				<caption>Users</caption>
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td>Phone</td>
+						<td>Email</td>
+						<td>Actions</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>abdoelaziz</td>
+						<td>14548544854</td>
+						<td>aaa@gmail.com</td>
+						<td>
+							<button class="edit">Edit</button>
+							<button class="delete">Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="add-user">Add User</button>
+		</div>
+		<div class="popup add">
+			<form action="">
+				<input type="text" placeholder="name" name="name">
+				<input type="tel" placeholder="phone" name="phone">
+				<input type="email" placeholder="email" name="email">
+				<input type="submit" value="submit" >
+			</form>
+		</div>
+		<div class="popup update"> 
+			<form action="">
+				<input type="text" placeholder="name" name="name">
+				<input type="tel" placeholder="phone" name="phone">
+				<input type="email" placeholder="email" name="email">
+				<input type="submit" value="submit" >
+			</form>
+		</div>-->
+		
+		<!--------------- Import + Configuration --------------->
+		<script type="module">
+			  // Import the functions you need from the SDKs you need
+			  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+			//  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
+			  // TODO: Add SDKs for Firebase products that you want to use
+			  // https://firebase.google.com/docs/web/setup#available-libraries
+
+			  // Your web app's Firebase configuration
+			  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+			  const firebaseConfig = {
+				apiKey: "AIzaSyB2iAWjuhmbJkQNuh2LjUzndMZqsCVkv2s",
+				authDomain: "bloodbank-de0ff.firebaseapp.com",
+				databaseURL: "https://bloodbank-de0ff.firebaseio.com",
+				projectId: "bloodbank-de0ff",
+				storageBucket: "bloodbank-de0ff.appspot.com",
+				messagingSenderId: "1015947718160",
+				appId: "1:1015947718160:web:c5101eb4d558550c29e495",
+				measurementId: "G-2D7TME2SHE"
+			  };
+
+			// Initialize Firebase
+			const app = initializeApp(firebaseConfig);
+			//  const analytics = getAnalytics(app);
+			  
+			import {getDatabase, ref, get, set, child, update, remove}
+			from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"; 
+
+			const db = getDatabase();
+
+			var name = document.getElementById("nameBox");
+			var roll = document.getElementById("rollBox");
+			var section = document.getElementById("secBox");
+			var gender = document.getElementById("genBox");
+
+			var insertBtn = document.getElementById("insBtn");
+			var selectBtn = document.getElementById("selBtn");
+			var updateBtn = document.getElementById("updBtn");
+			var deleteBtn = document.getElementById("delBtn");
+
+			// Insert Data Function 
+			function InsertData(){
+			  set(ref(db, "TheStudents/"+ roll.value),{
+				NameOfStd: name.value,
+				RollNo: roll.value,
+				Section: section.value,
+				Gender: gender.value
+			  })
+			  .then(()=>{
+				alert("Data stored successfully");
+			  })
+			  .catch((error)=>{
+				alert("Unsuccesfull, error" + error);
+			  });
+			}
+
+			// Select Data Function 
+			function SelectData(){
+			  
+				const dbref = ref(db);
+				  
+				get(child(dbref, "TheStudents/"+ roll.value)).then((snapshot)=>{
+					if(snapshot.exists()){
+						nameBox.value = snapshot.val().NameOfStd;
+						secBox.value = snapshot.val().Section;
+						genBox.value = snapshot.val().Gender;
+					} else {
+						alert("No Data Found");
+					}
+				})
+				.catch((error)=>{
+					alert("Unsuccesfull, error" + error);
+				});
+			}
+			
+			// Update Data Function 
+			function UpdateData(){
+			  update(ref(db, "TheStudents/"+ roll.value),{
+				NameOfStd: name.value,
+				Section: section.value,
+				Gender: gender.value
+			  })
+			  .then(()=>{
+				alert("Data updated successfully");
+			  })
+			  .catch((error)=>{
+				alert("Unsuccesfull, error" + error);
+			  });
+			}
+			
+			// Delete Data Function 
+			function DeleteData(){
+			  remove(ref(db, "TheStudents/"+ roll.value))
+			  .then(()=>{
+				alert("Data Removed successfully");
+			  })
+			  .catch((error)=>{
+				alert("Unsuccesfull, error" + error);
+			  });
+			}
+			
+			// Assign Button Actions 
+			insertBtn.addEventListener('click', InsertData);
+			selectBtn.addEventListener('click', SelectData);
+			updateBtn.addEventListener('click', UpdateData);
+			deleteBtn.addEventListener('click', DeleteData);
+		  
+		</script>
+		
+	</body>
+	
+</html>

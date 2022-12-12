@@ -1,0 +1,125 @@
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body
+{
+    font-family: cursive;
+}
+.wrapper
+{
+    min-height: 100vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#crud 
+{
+    width: 90%;
+    
+    text-align: center;
+}
+#crud caption
+{
+    background-color: #009688;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 1.5rem;
+}
+#crud thead
+{
+    background-color:aliceblue;
+   
+}
+#crud thead td
+{
+    padding: 10px;
+    color: #009688;
+}
+#crud tbody td
+{
+    padding: 10px;
+    border-bottom: 1px solid #009688;
+    color: #666565;
+}
+#crud tbody td button,.add-user
+{
+    padding: 5px 7px;
+    border:none;
+    background: transparent;
+    font-family: cursive;
+    font-size: .9rem;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#crud tbody td button.edit
+{
+    background-color:#009688;
+}
+#crud tbody td button.delete
+{
+    background-color:#e91e63;
+}
+.add-user
+{
+    background-color: #009688;
+   margin-top: 20px;
+   padding: 10px 20px;
+}
+.popup
+{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0, 0,.4);
+    display:none ;
+    place-items: center;
+}
+.popup.active
+{
+    display: grid;
+    animation: show .7s ease-in-out;
+}
+@keyframes show
+{   0%
+    {
+        transform: translateY(-100%);
+    }
+    100%
+    {
+        transform: translateY(0);
+    }
+}
+.popup form
+{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    width: 100%;
+    padding: 50px 20px;
+    
+}
+.popup form input
+{
+    width: 100%;
+    background-color: transparent;
+    border:none;
+    box-shadow: inset 0 0 2px rgba(0,0, 0,.4);
+    margin: 15px 0;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    font-family: cursive;
+   
+}
+.popup form input[type = "submit"]
+{
+    background-color: #009688;
+    color: #fff;
+    cursor: pointer;
+    max-width: 100px;
+}
